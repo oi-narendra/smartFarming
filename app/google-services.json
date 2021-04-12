@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "252572870095",
+    "project_id": "smart-farming-edcf5",
+    "storage_bucket": "smart-farming-edcf5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:252572870095:android:c8f61bfbae92e28d215eba",
+        "android_client_info": {
+          "package_name": "com.pranav.smartfarming"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "252572870095-98a3ufo8kstnrrogf8oaikdqbp9crd25.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBgy7ROWwbil3tR5ots0uUamjokXvgLP3E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "252572870095-98a3ufo8kstnrrogf8oaikdqbp9crd25.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/soilMonitorFragment"
+            android:checkable="true"
+            android:icon="@android:drawable/ic_menu_today"
+            android:title="@string/title_soil_monitoring" />
+        <item
+            android:id="@+id/cropsFragment"
+            android:checkable="true"
+            android:icon="@android:drawable/ic_menu_today"
+            android:title="@string/title_crops" />
+
+        <item
+            android:id="@+id/fertilityGraphFragment"
+            android:checkable="true"
+            android:icon="@android:drawable/ic_menu_today"
+            android:title="@string/title_fertility_graph"
+            tools:checked="true" />
+
+        <item
+            android:id="@+id/cropSuggestionFragment"
+            android:checkable="true"
+            android:icon="@android:drawable/ic_menu_today"
+            android:title="@string/title_crop_suggestions" />
+
+    </group>
+
+
+    <group android:checkableBehavior="none">
+        <item
+            android:id="@+id/logout"
+            android:icon="@drawable/ic_log_out"
+            android:title="@string/title_logout" />
+
+    </group>
+</menu>

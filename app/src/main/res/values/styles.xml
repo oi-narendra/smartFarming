@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="StyleEditTextLogin" parent="Widget.AppCompat.EditText">
+        <item name="background">@drawable/bg_rect_stroke_5_grey</item>
+    </style>
+
+    <style name="MyButtonStyle" parent="Widget.AppCompat.Button"/>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+</resources>
