@@ -76,6 +76,12 @@ class MainActivity : AppCompatActivity() {
                             R.id.samplesFragment
                         )
                     }
+
+                    R.id.weatherFragment-> {
+                        if (navController.currentDestination?.id != R.id.weatherFragment) navController.navigate(
+                            R.id.weatherFragment
+                        )
+                    }
                 }
             }, 250)
 

@@ -22,6 +22,11 @@
         android:name="com.pranav.smartfarming.ui.main.fragments.SampleDetailFragment"
         android:label="Sample Detail"
         tools:layout="@layout/fragment_sample_detail" />
+    <fragment
+        android:id="@+id/weatherFragment"
+        android:name="com.pranav.smartfarming.ui.main.fragments.weather.WeatherFragment"
+        android:label="Weather"
+        tools:layout="@layout/fragment_weather" />
 
 
 </navigation>

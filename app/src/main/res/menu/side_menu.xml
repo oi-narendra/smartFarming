@@ -28,6 +28,12 @@
             android:icon="@android:drawable/ic_menu_today"
             android:title="Samples" />
 
+        <item
+            android:id="@+id/weatherFragment"
+            android:checkable="true"
+            android:icon="@drawable/ic_cloud"
+            android:title="Weather" />
+
     </group>
 
 
