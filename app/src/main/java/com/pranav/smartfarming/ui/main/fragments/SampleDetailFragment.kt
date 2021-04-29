@@ -5,11 +5,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.github.mikephil.charting.components.XAxis
-import com.github.mikephil.charting.data.*
-import com.github.mikephil.charting.interfaces.datasets.IBarDataSet
+import com.github.mikephil.charting.data.Entry
+import com.github.mikephil.charting.data.LineData
+import com.github.mikephil.charting.data.LineDataSet
+import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
+import com.pranav.smartfarming.R
 import com.pranav.smartfarming.dataClasses.SampleData
 import com.pranav.smartfarming.databinding.FragmentSampleDetailBinding
 import timber.log.Timber
@@ -48,111 +52,120 @@ class SampleDetailFragment : Fragment() {
         val moistureDataSet = LineDataSet(getDataValues("Moisture"), "Moisture").also {
             it.color = Color.RED;it.setDrawCircles(false)
         }
-        val moistureBarDataSet = BarDataSet(getBarDataValues("Moisture"), "Moisture").also {
-            it.color = Color.RED
-        }
+
 
         val temperatureDataset = LineDataSet(getDataValues("Temperature"), "Temperature").also {
             it.color = Color.BLUE;it.setDrawCircles(false)
         }
-        val temperatureBarDataset =
-            BarDataSet(getBarDataValues("Temperature"), "Temperature").also {
-                it.color = Color.BLUE
-            }
 
         val humidityDataSet = LineDataSet(getDataValues("Humidity"), "Humidity").also {
             it.color = Color.GREEN;it.setDrawCircles(false)
         }
-        val humidityBarDataSet = BarDataSet(getBarDataValues("Humidity"), "Humidity").also {
-            it.color = Color.GREEN
-        }
+
 
         val nitrogenDataSet = LineDataSet(getDataValues("N"), "N").also {
-            it.color = Color.YELLOW;it.setDrawCircles(false)
+            it.color =
+                ContextCompat.getColor(requireContext(), R.color.pink);it.setDrawCircles(false)
         }
-        val nitrogenBarDataSet = BarDataSet(getBarDataValues("N"), "N").also {
-            it.color = Color.YELLOW
-        }
+
 
         val phosphorousDataSet = LineDataSet(getDataValues("P"), "P").also {
             it.color = Color.CYAN;it.setDrawCircles(false)
         }
-        val phosphorousBarDataSet = BarDataSet(getBarDataValues("P"), "P").also {
-            it.color = Color.CYAN
-        }
+
 
         val potassiumDataSet = LineDataSet(getDataValues("K"), "K").also {
             it.color = Color.GRAY;it.setDrawCircles(false)
         }
-        val potassiumBarDataSet = BarDataSet(getBarDataValues("K"), "K").also {
-            it.color = Color.GRAY
-        }
 
-        val phDataSet = LineDataSet(getDataValues("pH"), "pH").also {
-            it.color = Color.MAGENTA;it.setDrawCircles(false)
-        }
-        val phBarDataSet = BarDataSet(getBarDataValues("pH"), "pH").also {
-            it.color = Color.MAGENTA;
+
+        val dates = mutableListOf<String>()
+
+        sampleData?.readings?.entries?.forEach {
+            dates.add(it.value.Date)
         }
 
 
-        val lineDataSets = mutableListOf<LineDataSet>()
-        val barDataSets = mutableListOf<BarDataSet>()
 
-        lineDataSets.add(moistureDataSet)
-        lineDataSets.add(temperatureDataset)
-        lineDataSets.add(humidityDataSet)
-        lineDataSets.add(nitrogenDataSet)
-        lineDataSets.add(phosphorousDataSet)
-        lineDataSets.add(potassiumDataSet)
-        lineDataSets.add(phDataSet)
+        Timber.d(dates.toString())
 
+        val moistureDataSets = mutableListOf<LineDataSet>()
+        val npkDataSets = mutableListOf<LineDataSet>()
+        val humidityDataSets = mutableListOf<LineDataSet>()
 
-        barDataSets.add(moistureBarDataSet)
-        barDataSets.add(temperatureBarDataset)
-        barDataSets.add(humidityBarDataSet)
-        barDataSets.add(nitrogenBarDataSet)
-        barDataSets.add(phosphorousBarDataSet)
-        barDataSets.add(potassiumBarDataSet)
-        barDataSets.add(phBarDataSet)
+        moistureDataSets.add(moistureDataSet)
 
-        Timber.d(lineDataSets.toString())
+        npkDataSets.add(nitrogenDataSet)
+        npkDataSets.add(phosphorousDataSet)
+        npkDataSets.add(potassiumDataSet)
 
-        binding.chart.setBackgroundColor(Color.WHITE)
-        val lineData = LineData(lineDataSets as List<ILineDataSet>?)
-        val barData = BarData(barDataSets as List<IBarDataSet>?)
-        binding.chart.apply {
+        humidityDataSets.add(temperatureDataset)
+        humidityDataSets.add(humidityDataSet)
+
+        binding.moistureChart.setBackgroundColor(Color.WHITE)
+        binding.npkChart.setBackgroundColor(Color.WHITE)
+        binding.temperatureChart.setBackgroundColor(Color.WHITE)
+        val lineMoistureData = LineData(moistureDataSets as List<ILineDataSet>?)
+        val lineTempData = LineData(humidityDataSets as List<ILineDataSet>?)
+        val lineNPKData = LineData(npkDataSets as List<ILineDataSet>?)
+
+        binding.moistureChart.apply {
             xAxis.axisMinimum = 0F
             xAxis.position = XAxis.XAxisPosition.BOTTOM
             xAxis.granularity = 1F
             axisRight.isEnabled = false
-            data = lineData
+            data = lineMoistureData
+
+            val xAxis = xAxis
+            xAxis.setDrawAxisLine(true)
+            xAxis.setDrawGridLines(false)
+            xAxis.setDrawLabels(true)
+            xAxis.spaceMax = 1f // optional
+            xAxis.spaceMin = 1f // optional
+//            xAxis.valueFormatter = object : ValueFormatter() {
+//                override
+//                fun getFormattedValue(value: Float): String {
+//                    Timber.d(value.toString())
+//
+//                    if (value.toInt() > dates.size) return "-"
+//                    return dates[value.toInt()]
+//                }
+//            }
             invalidate()
 
         }
 
-        binding.barChart.apply {
+        binding.temperatureChart.apply {
             xAxis.axisMinimum = 0F
             xAxis.position = XAxis.XAxisPosition.BOTTOM
             xAxis.granularity = 1F
             axisRight.isEnabled = false
-            data = barData
+            data = lineTempData
             invalidate()
 
         }
+        binding.npkChart.apply {
+            xAxis.axisMinimum = 0F
+            xAxis.position = XAxis.XAxisPosition.BOTTOM
+            xAxis.granularity = 1F
+            axisRight.isEnabled = false
+            data = lineNPKData
+            invalidate()
+
+        }
+
 
     }
 
     private fun getDataValues(key: String): MutableList<Entry> {
         val dataVals = mutableListOf<Entry>()
         sampleData?.readings?.entries?.forEachIndexed { index, mutableEntry ->
-            Timber.d(mutableEntry.value.toString())
             dataVals.add(
                 Entry(
                     index.toFloat(), when (key) {
                         "Moisture" -> mutableEntry.value.Moisture
                         "Temperature" -> mutableEntry.value.Temperature
-                        "Humidity " -> mutableEntry.value.Humidity
+                        "Humidity" -> mutableEntry.value.Humidity
                         "N" -> mutableEntry.value.Nitrogen
                         "P" -> mutableEntry.value.Phosphorous
                         "K" -> mutableEntry.value.Potassium
@@ -165,25 +178,4 @@ class SampleDetailFragment : Fragment() {
         return dataVals
     }
 
-    private fun getBarDataValues(key: String): MutableList<BarEntry> {
-        val dataVals = mutableListOf<BarEntry>()
-        sampleData?.readings?.entries?.forEachIndexed { index, mutableEntry ->
-            Timber.d(mutableEntry.value.toString())
-            dataVals.add(
-                BarEntry(
-                    index.toFloat(), when (key) {
-                        "Moisture" -> mutableEntry.value.Moisture
-                        "Temperature" -> mutableEntry.value.Temperature
-                        "Humidity " -> mutableEntry.value.Humidity
-                        "N" -> mutableEntry.value.Nitrogen
-                        "P" -> mutableEntry.value.Phosphorous
-                        "K" -> mutableEntry.value.Potassium
-                        "pH" -> mutableEntry.value.pH
-                        else -> 0F
-                    }
-                )
-            )
-        }
-        return dataVals
-    }
 }

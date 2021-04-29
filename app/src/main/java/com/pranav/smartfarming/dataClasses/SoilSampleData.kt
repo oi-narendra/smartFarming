@@ -20,5 +20,5 @@ data class Reading(
     val Temperature: Float,
     val Date: String,
     val pH: Float,
-    val testedBy: String
+    val testedby: String
 ):Serializable
