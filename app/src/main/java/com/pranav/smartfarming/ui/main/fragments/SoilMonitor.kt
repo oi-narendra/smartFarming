@@ -1,5 +1,6 @@
 package com.pranav.smartfarming.ui.main.fragments
 
+import android.app.AlertDialog
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -7,14 +8,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.google.firebase.firestore.FirebaseFirestore
+import com.pranav.smartfarming.R
 import com.pranav.smartfarming.dataClasses.SoilData
+import com.pranav.smartfarming.databinding.DialogPredictedCropBinding
 import com.pranav.smartfarming.databinding.FragmentSoilMonitorBinding
 import com.pranav.smartfarming.utils.errorToast
-import com.pranav.smartfarming.utils.successToast
 import com.squareup.okhttp.*
-import timber.log.Timber
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
@@ -118,12 +121,28 @@ class SoilMonitor : Fragment() {
                         }
 
                     } else {
+                        binding.soilPredictCrop.text = "Predict Crop"
                         requireActivity().runOnUiThread {
-                            Log.d(TAG, "True")
-                            responseBody?.let { context?.successToast(it) }
-                            binding.soilPredictCrop.text = "Predict Crop"
-                            binding.soilPredictCrop.isEnabled = true
+                            val alertDialog = AlertDialog.Builder(requireContext()).create()
+                            alertDialog.setCancelable(true)
+                            val mDialogBinding = DialogPredictedCropBinding.inflate(layoutInflater)
+                            alertDialog.setView(mDialogBinding.root)
+
+                            mDialogBinding.predictedCropName.text = responseBody.toString()
+                            mDialogBinding.cropPredictDetails.setOnClickListener {
+                                alertDialog.dismiss()
+//                                findNavController().navigate(
+//                                    R.id.cropPredictionFragment,
+//                                    bundleOf("" to "")
+//                                )
+                            }
+
+                            alertDialog.setOnDismissListener {
+                                binding.soilPredictCrop.isEnabled = true
+                            }
+                            alertDialog.show()
                         }
+
                     }
 
                 } catch (e: Exception) {

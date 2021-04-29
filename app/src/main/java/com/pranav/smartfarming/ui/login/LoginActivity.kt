@@ -1,12 +1,14 @@
 package com.pranav.smartfarming.ui.login
 
 import android.app.Dialog
+import android.content.Intent
 import android.os.Bundle
 import android.view.Window
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.pranav.smartfarming.databinding.ActivityLoginBinding
 import com.pranav.smartfarming.databinding.ProgressDialogBinding
+import com.pranav.smartfarming.ui.main.MainActivity
 import com.pranav.smartfarming.utils.errorToast
 import com.pranav.smartfarming.utils.isValidEmail
 import com.pranav.smartfarming.utils.successToast
@@ -46,6 +48,8 @@ class LoginActivity : AppCompatActivity() {
                             Timber.d("signInWithEmail:success")
                             successToast("Success")
                             progressDialog.dismiss()
+                            startActivity(Intent(this, MainActivity::class.java))
+                            finish()
 
                         } else {
                             errorToast("${task.exception?.message}")

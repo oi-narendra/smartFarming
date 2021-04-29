@@ -11,4 +11,17 @@
         android:label="Soil Monitor"
         tools:layout="@layout/fragment_soil_monitor" />
 
+    <fragment
+        android:id="@+id/samplesFragment"
+        android:name="com.pranav.smartfarming.ui.main.fragments.SamplesFragment"
+        android:label="Soil Samples"
+        tools:layout="@layout/fragment_samples" />
+
+    <fragment
+        android:id="@+id/sampleDetailFragment"
+        android:name="com.pranav.smartfarming.ui.main.fragments.SampleDetailFragment"
+        android:label="Sample Detail"
+        tools:layout="@layout/fragment_sample_detail" />
+
+
 </navigation>

@@ -46,7 +46,8 @@ class MainActivity : AppCompatActivity() {
 
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.soilMonitorFragment
+                R.id.soilMonitorFragment,
+                R.id.samplesFragment
             ), drawerLayout
         )
 
@@ -68,6 +69,12 @@ class MainActivity : AppCompatActivity() {
                         startActivity(Intent(this, LoginActivity::class.java))
                         finish()
 
+                    }
+
+                    R.id.samplesFragment-> {
+                        if (navController.currentDestination?.id != R.id.samplesFragment) navController.navigate(
+                            R.id.samplesFragment
+                        )
                     }
                 }
             }, 250)

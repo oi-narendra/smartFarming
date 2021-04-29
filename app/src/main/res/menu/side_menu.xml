@@ -23,10 +23,10 @@
             tools:checked="true" />
 
         <item
-            android:id="@+id/cropSuggestionFragment"
+            android:id="@+id/samplesFragment"
             android:checkable="true"
             android:icon="@android:drawable/ic_menu_today"
-            android:title="@string/title_crop_suggestions" />
+            android:title="Samples" />
 
     </group>
 
