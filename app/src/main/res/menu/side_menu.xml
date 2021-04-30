@@ -12,27 +12,20 @@
         <item
             android:id="@+id/cropsFragment"
             android:checkable="true"
-            android:icon="@android:drawable/ic_menu_today"
+            android:icon="@drawable/ic_fertility"
             android:title="@string/title_crops" />
-
-        <item
-            android:id="@+id/fertilityGraphFragment"
-            android:checkable="true"
-            android:icon="@android:drawable/ic_menu_today"
-            android:title="@string/title_fertility_graph"
-            tools:checked="true" />
 
         <item
             android:id="@+id/samplesFragment"
             android:checkable="true"
             android:icon="@android:drawable/ic_menu_today"
-            android:title="Samples" />
+            android:title="@string/samples" />
 
         <item
             android:id="@+id/weatherFragment"
             android:checkable="true"
             android:icon="@drawable/ic_cloud"
-            android:title="Weather" />
+            android:title="@string/weather" />
 
     </group>
 

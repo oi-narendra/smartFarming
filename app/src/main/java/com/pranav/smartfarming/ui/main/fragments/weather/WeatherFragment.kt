@@ -43,7 +43,7 @@ class WeatherFragment : Fragment() {
         val client = OkHttpClient()
 
         val get: Request = Request.Builder()
-            .url("https://api.openweathermap.org/data/2.5/weather?q=Kathmandu&appid=ea7e8162e53ce3d0873e2a266a7c71e8")
+            .url("https://api.openweathermap.org/data/2.5/weather?q=Mahendranagar&appid=ea7e8162e53ce3d0873e2a266a7c71e8")
             .build()
 
         client.newCall(get).enqueue(object : Callback {

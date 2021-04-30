@@ -1,6 +1,7 @@
 package com.pranav.smartfarming.ui.main.fragments
 
 import android.app.AlertDialog
+import android.content.Context
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -8,11 +9,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.pranav.smartfarming.R
+import com.pranav.smartfarming.dataClasses.PredictedCropModel
 import com.pranav.smartfarming.dataClasses.SoilData
 import com.pranav.smartfarming.databinding.DialogPredictedCropBinding
 import com.pranav.smartfarming.databinding.FragmentSoilMonitorBinding
@@ -63,10 +66,13 @@ class SoilMonitor : Fragment() {
             val soilData = it.result?.toObjects(SoilData::class.java)
             binding.data = soilData?.first()
             this.soilData = soilData?.firstOrNull()
+
+            binding.soilPredictCrop.isEnabled = true
         }
             .addOnFailureListener {
                 binding.soilMonitorRefresh.isRefreshing = false
                 it.message?.let { it1 -> context?.errorToast(it1) }
+                binding.soilPredictCrop.isEnabled = false
             }
 
         binding.soilPredictCrop.setOnClickListener {
@@ -81,18 +87,18 @@ class SoilMonitor : Fragment() {
         val client = OkHttpClient()
 
         val formBody: RequestBody = FormEncodingBuilder()
-            .add("N", soilData?.N!!)
-            .add("P", soilData?.P!!)
-            .add("K", soilData?.K!!)
-            .add("temperature", soilData?.temperature!!)
-            .add("humidity", soilData?.humidity!!)
-            .add("pH", soilData?.pH!!)
-            .add("moisture", soilData?.moisture!!)
+            .add("N", soilData?.N)
+            .add("P", soilData?.P)
+            .add("K", soilData?.K)
+            .add("temperature", soilData?.temperature)
+            .add("humidity", soilData?.humidity)
+            .add("pH", soilData?.pH)
+            .add("moisture", soilData?.moisture)
             .build()
 
 
         val get: Request = Request.Builder()
-            .url("http://192.168.10.72:5000/predict_mobile")
+            .url("http://192.168.1.67:5000/predict_mobile")
             .post(formBody)
             .build()
 
@@ -128,13 +134,17 @@ class SoilMonitor : Fragment() {
                             val mDialogBinding = DialogPredictedCropBinding.inflate(layoutInflater)
                             alertDialog.setView(mDialogBinding.root)
 
-                            mDialogBinding.predictedCropName.text = responseBody.toString()
+                            val predictedCrop = Gson().fromJson<PredictedCropModel>(
+                                responseBody,
+                                object : TypeToken<PredictedCropModel>() {}.type
+                            )
+
+
+                            mDialogBinding.predictedCropName.text = predictedCrop.predicted_crop
                             mDialogBinding.cropPredictDetails.setOnClickListener {
                                 alertDialog.dismiss()
-//                                findNavController().navigate(
-//                                    R.id.cropPredictionFragment,
-//                                    bundleOf("" to "")
-//                                )
+                                saveCropToLocalStorage(predictedCrop)
+                                findNavController().navigate(R.id.cropsFragment)
                             }
 
                             alertDialog.setOnDismissListener {
@@ -151,6 +161,17 @@ class SoilMonitor : Fragment() {
             }
         })
 
+    }
+
+    private fun saveCropToLocalStorage(cropName: PredictedCropModel) {
+        val sharedPreference = requireActivity().application.getSharedPreferences(
+            "smart_farming",
+            Context.MODE_PRIVATE
+        )
+
+        sharedPreference.edit().putString(
+            "active_crop", Gson().toJson(cropName)
+        ).apply()
     }
 
     companion object {

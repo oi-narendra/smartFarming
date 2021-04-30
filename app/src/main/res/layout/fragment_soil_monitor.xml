@@ -708,6 +708,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_20"
+                    android:enabled="false"
                     android:background="@drawable/bg_rect_solid_5"
                     android:text="PREDICT CROP" />
 

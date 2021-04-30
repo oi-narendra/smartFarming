@@ -21,4 +21,8 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="degree">"\u2103"</string>
+    <string name="samples">Samples</string>
+    <string name="weather">Weather</string>
+    <string name="soil_statistics">Soil Statistics</string>
+    <string name="crop_name">CROP NAME</string>
 </resources>
