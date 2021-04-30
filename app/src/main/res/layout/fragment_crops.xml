@@ -7,6 +7,17 @@
     tools:background="@drawable/bg_grad"
     tools:context=".ui.main.fragments.crops.CropsFragment">
 
+
+    <TextView
+        android:id="@+id/no_crop_text"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="NO CROP ADDED"
+        android:textColor="@color/white"
+        android:textSize="30sp"
+        android:visibility="gone" />
+
     <ImageView
         android:id="@+id/image_crop"
         android:layout_width="match_parent"
@@ -51,6 +62,7 @@
         app:layout_constraintTop_toBottomOf="@id/crop_name_text" />
 
     <ScrollView
+        android:id="@+id/scrollview2"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_margin="20dp"

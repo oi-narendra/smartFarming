@@ -21,6 +21,7 @@ import com.pranav.smartfarming.databinding.DialogPredictedCropBinding
 import com.pranav.smartfarming.databinding.FragmentSoilMonitorBinding
 import com.pranav.smartfarming.utils.errorToast
 import com.squareup.okhttp.*
+import timber.log.Timber
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
@@ -66,6 +67,7 @@ class SoilMonitor : Fragment() {
             val soilData = it.result?.toObjects(SoilData::class.java)
             binding.data = soilData?.first()
             this.soilData = soilData?.firstOrNull()
+            Timber.d(soilData.toString())
 
             binding.soilPredictCrop.isEnabled = true
         }
@@ -127,8 +129,8 @@ class SoilMonitor : Fragment() {
                         }
 
                     } else {
-                        binding.soilPredictCrop.text = "Predict Crop"
                         requireActivity().runOnUiThread {
+                            binding.soilPredictCrop.text = "Predict Crop"
                             val alertDialog = AlertDialog.Builder(requireContext()).create()
                             alertDialog.setCancelable(true)
                             val mDialogBinding = DialogPredictedCropBinding.inflate(layoutInflater)

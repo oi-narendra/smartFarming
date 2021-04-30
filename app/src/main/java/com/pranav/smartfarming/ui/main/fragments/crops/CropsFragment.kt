@@ -53,40 +53,53 @@ class CropsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val predictedCropString = sharedPreferences.getString("active_crop", null)
-        val predictedCrop = Gson().fromJson<PredictedCropModel>(
-            predictedCropString,
-            object : TypeToken<PredictedCropModel>() {}.type
-        )
 
-        Timber.d(predictedCrop.toString())
 
-        binding.cropName.text = predictedCrop.predicted_crop
-        attributes = predictedCrop.attributes
+        if (predictedCropString == null) {
+            binding.imageCrop.visibility = View.GONE
+            binding.cropNameText.visibility = View.GONE
+            binding.cropName.visibility = View.GONE
+            binding.soilStatistics.visibility = View.GONE
+            binding.scrollview2.visibility = View.GONE
+            binding.noCropText.visibility = View.VISIBLE
+        } else {
+            binding.noCropText.visibility = View.GONE
+            val predictedCrop = Gson().fromJson<PredictedCropModel>(
+                predictedCropString,
+                object : TypeToken<PredictedCropModel>() {}.type
+            )
 
-        setData(attributes)
+            Timber.d(predictedCrop.toString())
 
-        val database = FirebaseDatabase.getInstance()
-        database.getReference("crop")
-            .addValueEventListener(object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
+            binding.cropName.text = predictedCrop.predicted_crop
+            attributes = predictedCrop.attributes
 
-                    val newAttrib = Gson().fromJson<Attributes>(
-                        snapshot.value.toString(),
-                        object : TypeToken<Attributes>() {}.type
-                    )
+            setData(attributes)
 
-                    if (newAttrib != null) {
-                        remoteAttributes = newAttrib
-                        setData(remoteAttributes)
+            val database = FirebaseDatabase.getInstance()
+            database.getReference("crop")
+                .addValueEventListener(object : ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+
+                        val newAttrib = Gson().fromJson<Attributes>(
+                            snapshot.value.toString(),
+                            object : TypeToken<Attributes>() {}.type
+                        )
+
+                        if (newAttrib != null) {
+                            remoteAttributes = newAttrib
+                            setData(remoteAttributes)
+                        }
+
                     }
 
-                }
+                    override fun onCancelled(error: DatabaseError) {
 
-                override fun onCancelled(error: DatabaseError) {
+                    }
 
-                }
+                })
+        }
 
-            })
 
     }
 
@@ -99,7 +112,8 @@ class CropsFragment : Fragment() {
         binding.moistureValue.text = attribs.moisture.toString()
         binding.pHValue.text = attribs.pH.toString()
 
-        if (attribs.moisture - attributes.moisture > 40) {
+        Timber.d("attrib: ${attribs.moisture}, attributes: ${attributes.moisture}")
+        if (attributes.moisture - attribs.moisture > 40) {
             showIrrigationNotification()
             binding.moistureContainer.backgroundTintList =
                 ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.pink))
