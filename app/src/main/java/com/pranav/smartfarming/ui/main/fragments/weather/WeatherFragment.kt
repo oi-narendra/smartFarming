@@ -47,11 +47,8 @@ class WeatherFragment : Fragment() {
             .build()
 
         client.newCall(get).enqueue(object : Callback {
-
             override fun onFailure(request: Request?, e: java.io.IOException?) {
                 e?.printStackTrace()
-
-
             }
 
             @RequiresApi(Build.VERSION_CODES.N)
@@ -81,10 +78,6 @@ class WeatherFragment : Fragment() {
                             "Pressure: " + (weatherData.main.pressure).toString() + "mBar"
                         binding.humidity.text =
                             "Humidity: " + (weatherData.main.humidity).toString() + "%"
-
-//                        binding.sunrise.text =
-//                            "Sunrise: " + getDate(weatherData.sys.sunrise.toLong())
-//                        binding.sunset.text = "Sunset: " + getDate(weatherData.sys.sunset.toLong())
                     }
 
 

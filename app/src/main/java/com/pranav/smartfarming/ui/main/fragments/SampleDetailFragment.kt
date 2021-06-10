@@ -120,17 +120,8 @@ class SampleDetailFragment : Fragment() {
             xAxis.setDrawAxisLine(true)
             xAxis.setDrawGridLines(false)
             xAxis.setDrawLabels(true)
-            xAxis.spaceMax = 1f // optional
-            xAxis.spaceMin = 1f // optional
-//            xAxis.valueFormatter = object : ValueFormatter() {
-//                override
-//                fun getFormattedValue(value: Float): String {
-//                    Timber.d(value.toString())
-//
-//                    if (value.toInt() > dates.size) return "-"
-//                    return dates[value.toInt()]
-//                }
-//            }
+            xAxis.spaceMax = 1f
+            xAxis.spaceMin = 1f
             invalidate()
 
         }
