@@ -27,6 +27,12 @@
             android:icon="@drawable/ic_cloud"
             android:title="@string/weather" />
 
+        <item
+            android:id="@+id/diseasePredictionFragment"
+            android:checkable="true"
+            android:icon="@drawable/ic_disease"
+            android:title="@string/disease_prediction" />
+
     </group>
 
 

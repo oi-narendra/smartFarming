@@ -50,7 +50,8 @@ class MainActivity : AppCompatActivity() {
             setOf(
                 R.id.soilMonitorFragment,
                 R.id.samplesFragment,
-                R.id.cropsFragment
+                R.id.cropsFragment,
+                R.id.diseasePredictionFragment
             ), drawerLayout
         )
 
@@ -94,6 +95,12 @@ class MainActivity : AppCompatActivity() {
                     R.id.cropsFragment -> {
                         if (navController.currentDestination?.id != R.id.cropsFragment) navController.navigate(
                             R.id.cropsFragment
+                        )
+                    }
+
+                    R.id.diseasePredictionFragment -> {
+                        if (navController.currentDestination?.id != R.id.diseasePredictionFragment) navController.navigate(
+                            R.id.diseasePredictionFragment
                         )
                     }
                 }

@@ -14,6 +14,7 @@ import androidx.navigation.fragment.findNavController
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.pranav.smartfarming.BASE_URL
 import com.pranav.smartfarming.R
 import com.pranav.smartfarming.dataClasses.PredictedCropModel
 import com.pranav.smartfarming.dataClasses.SoilData
@@ -100,7 +101,7 @@ class SoilMonitor : Fragment() {
 
 
         val get: Request = Request.Builder()
-            .url("http://192.168.1.67:5000/predict_mobile")
+            .url("${BASE_URL}predict_mobile")
             .post(formBody)
             .build()
 

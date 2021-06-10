@@ -32,6 +32,11 @@
         android:name="com.pranav.smartfarming.ui.main.fragments.crops.CropsFragment"
         android:label="Crop"
         tools:layout="@layout/fragment_crops" />
+    <fragment
+        android:id="@+id/diseasePredictionFragment"
+        android:name="com.pranav.smartfarming.ui.main.fragments.DiseasePredictionFragment"
+        android:label="Disease Prediction"
+        tools:layout="@layout/fragment_disease_prediction" />
 
 
 </navigation>

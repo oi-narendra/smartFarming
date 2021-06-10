@@ -25,4 +25,5 @@
     <string name="weather">Weather</string>
     <string name="soil_statistics">Soil Statistics</string>
     <string name="crop_name">CROP NAME</string>
+    <string name="disease_prediction">Disease Prediction</string>
 </resources>
